@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ModuleInsolationDialogBase</class>
+ <widget class="QDialog" name="ModuleInsolationDialogBase">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>520</width><height>570</height></rect>
+  </property>
+  <property name="minimumSize"><size><width>520</width><height>570</height></size></property>
+  <property name="maximumSize"><size><width>520</width><height>570</height></size></property>
+  <property name="windowTitle"><string>Urban insolation calculation</string></property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+    background: #fbfbfb;
+    color: #181818;
+    font-family: "Anek Latin", "Arial", sans-serif;
+    font-size: 14px;
+}
+QLabel#title_label {
+    color: #0b3eff;
+    font-family: "Monomaniac One", "Arial", sans-serif;
+    font-size: 30px;
+    letter-spacing: 1.5px;
+}
+QLabel#description_label {
+    color: #707070;
+    font-size: 12px;
+    letter-spacing: 0.1px;
+}
+QLabel[fieldLabel="true"] {
+    color: #181818;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+}
+QLabel#height_help_label {
+    color: #707070;
+    font-size: 11px;
+    letter-spacing: 0.1px;
+}
+QgsMapLayerComboBox, QgsFieldComboBox, QDateEdit, QLineEdit {
+    min-height: 34px;
+    padding-left: 11px;
+    padding-right: 11px;
+    color: #242424;
+    background: white;
+    border: 1px solid #b1b1b1;
+    border-radius: 4px;
+}
+QgsFieldComboBox:disabled {
+    color: #707070;
+    background: #f2f2f2;
+}
+QPushButton {
+    min-height: 34px;
+    padding: 0 15px;
+    color: #181818;
+    background: white;
+    border: 1px solid #b1b1b1;
+    border-radius: 4px;
+}
+QPushButton:hover { background: #f2f2f2; }
+QPushButton:pressed { background: #e7e7e7; }
+QPushButton#ok_button {
+    padding: 0;
+    color: white;
+    background: #0b3eff;
+    border-color: #0b3eff;
+}
+QPushButton#ok_button:hover { background: #092fd1; border-color: #092fd1; }
+QPushButton#ok_button:pressed { background: #0828b5; border-color: #0828b5; }
+QPushButton#cancel_button, QPushButton#tool_button { padding: 0; }
+QPushButton#more_information_button, QPushButton#calculate_year_button {
+    min-height: 24px;
+    padding: 0;
+    color: #0b3eff;
+    font-family: "Monomaniac One", "Arial", sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    text-align: left;
+    background: transparent;
+    border: none;
+}
+QPushButton#more_information_button:hover, QPushButton#calculate_year_button:hover { color: #092fd1; }
+QPushButton#calculate_year_button { text-align: center; }
+QLabel#footer_label {
+    color: rgba(11, 62, 255, 96);
+    font-family: "Monomaniac One", "Arial", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.6px;
+}</string>
+  </property>
+  <widget class="QLabel" name="title_label">
+   <property name="geometry"><rect><x>34</x><y>20</y><width>452</width><height>44</height></rect></property>
+   <property name="text"><string>Urban insolation calculation</string></property>
+  </widget>
+  <widget class="QLabel" name="description_label">
+   <property name="geometry"><rect><x>34</x><y>59</y><width>452</width><height>18</height></rect></property>
+   <property name="text"><string>Calculate insolation from terrain and building data.</string></property>
+  </widget>
+  <widget class="QLabel" name="dem_label">
+   <property name="fieldLabel" stdset="0"><bool>true</bool></property>
+   <property name="geometry"><rect><x>34</x><y>82</y><width>452</width><height>22</height></rect></property>
+   <property name="text"><string>Elevation model *</string></property>
+  </widget>
+  <widget class="QgsMapLayerComboBox" name="combobox_dem">
+   <property name="geometry"><rect><x>34</x><y>106</y><width>452</width><height>36</height></rect></property>
+  </widget>
+  <widget class="QLabel" name="buildings_label">
+   <property name="fieldLabel" stdset="0"><bool>true</bool></property>
+   <property name="geometry"><rect><x>34</x><y>158</y><width>452</width><height>22</height></rect></property>
+   <property name="text"><string>Buildings *</string></property>
+  </widget>
+  <widget class="QCheckBox" name="use_buildings_checkbox">
+   <property name="geometry"><rect><x>350</x><y>154</y><width>136</width><height>28</height></rect></property>
+   <property name="text"><string>Use buildings</string></property>
+   <property name="checked"><bool>true</bool></property>
+  </widget>
+  <widget class="QgsMapLayerComboBox" name="combobox_buildings">
+   <property name="geometry"><rect><x>34</x><y>182</y><width>452</width><height>36</height></rect></property>
+  </widget>
+  <widget class="QLabel" name="height_label">
+   <property name="fieldLabel" stdset="0"><bool>true</bool></property>
+   <property name="geometry"><rect><x>34</x><y>234</y><width>452</width><height>22</height></rect></property>
+   <property name="text"><string>Height field *</string></property>
+  </widget>
+  <widget class="QgsFieldComboBox" name="combobox_height">
+   <property name="enabled"><bool>false</bool></property>
+   <property name="geometry"><rect><x>34</x><y>258</y><width>452</width><height>36</height></rect></property>
+  </widget>
+  <widget class="QLabel" name="height_help_label">
+   <property name="geometry"><rect><x>34</x><y>299</y><width>452</width><height>17</height></rect></property>
+   <property name="text"><string>Available after selecting a building layer</string></property>
+  </widget>
+  <widget class="QLabel" name="output_label">
+   <property name="fieldLabel" stdset="0"><bool>true</bool></property>
+   <property name="geometry"><rect><x>34</x><y>388</y><width>452</width><height>22</height></rect></property>
+   <property name="text"><string>Output</string></property>
+  </widget>
+  <widget class="QLabel" name="date_label">
+   <property name="fieldLabel" stdset="0"><bool>true</bool></property>
+   <property name="geometry"><rect><x>34</x><y>318</y><width>452</width><height>22</height></rect></property>
+   <property name="text"><string>Date *</string></property>
+  </widget>
+  <widget class="QDateEdit" name="date_edit">
+   <property name="geometry"><rect><x>34</x><y>342</y><width>452</width><height>36</height></rect></property>
+   <property name="displayFormat"><string>dd.MM.yyyy</string></property>
+   <property name="calendarPopup"><bool>true</bool></property>
+  </widget>
+  <widget class="QLineEdit" name="text_save">
+   <property name="geometry"><rect><x>34</x><y>412</y><width>408</width><height>36</height></rect></property>
+   <property name="placeholderText"><string>Temporary layer</string></property>
+   <property name="clearButtonEnabled"><bool>true</bool></property>
+  </widget>
+  <widget class="QPushButton" name="tool_button">
+   <property name="geometry"><rect><x>450</x><y>412</y><width>36</width><height>36</height></rect></property>
+   <property name="toolTip"><string>Select output file</string></property>
+   <property name="text"><string>...</string></property>
+  </widget>
+  <widget class="QPushButton" name="more_information_button">
+   <property name="geometry"><rect><x>34</x><y>478</y><width>119</width><height>36</height></rect></property>
+   <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+   <property name="text"><string>More information</string></property>
+  </widget>
+  <widget class="QPushButton" name="calculate_year_button">
+   <property name="geometry"><rect><x>153</x><y>478</y><width>150</width><height>36</height></rect></property>
+   <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+   <property name="text"><string>Calculate year</string></property>
+  </widget>
+  <widget class="QPushButton" name="cancel_button">
+   <property name="geometry"><rect><x>340</x><y>478</y><width>68</width><height>36</height></rect></property>
+   <property name="text"><string>Cancel</string></property>
+  </widget>
+  <widget class="QPushButton" name="ok_button">
+   <property name="geometry"><rect><x>416</x><y>478</y><width>70</width><height>36</height></rect></property>
+   <property name="default"><bool>true</bool></property>
+   <property name="text"><string>Run</string></property>
+  </widget>
+  <widget class="QLabel" name="footer_label">
+   <property name="geometry"><rect><x>34</x><y>541</y><width>452</width><height>16</height></rect></property>
+   <property name="text"><string>made by @leninsquare, 2026</string></property>
+   <property name="alignment"><set>Qt::AlignCenter</set></property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QgsMapLayerComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qgis.gui</header>
+  </customwidget>
+  <customwidget>
+   <class>QgsFieldComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qgis.gui</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/plugins/urban_insolation">
+    <file alias="insolation.svg">icons/insolation.svg</file>
+  </qresource>
+</RCC>

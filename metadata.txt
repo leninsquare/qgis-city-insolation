@@ -1,0 +1,12 @@
+[general]
+name=Urban Insolation Analysis
+description=Calculates daily and annual accumulated shadows from terrain and building data.
+about=Builds a digital surface model from a DEM and building heights, then calculates accumulated terrain shadows for a selected date or for every day of the current year.
+version=1.0
+qgisMinimumVersion=3.28
+author=leninsquare
+category=Raster
+icon=icons/insolation.svg
+experimental=True
+deprecated=False
+hasProcessingProvider=False
