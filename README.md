@@ -27,8 +27,6 @@ The output represents the number of calculation samples during which a cell is i
 - PyProj 3.5 or newer
 - Fiona 1.9 or newer
 
-The required versions are listed in `requirements.txt`. Dependencies must be installed in the Python environment used by QGIS, not only in the system Python environment. Numba is optional and is not required for the default calculation path.
-
 ## Installation
 
 ### Install from a ZIP archive
