@@ -108,14 +108,15 @@ class ModuleInsolationPlugin:
             self._run_annual_from_dialog(dialog)
 
     def _run_daily_from_dialog(self, dialog: ModuleInsolationDialog) -> None:
-        progress = self._create_progress_dialog(
-            self.tr("Calculating daily insolation…")
-        )
+        progress = None
         surface_path = None
         try:
             self._validate_spatial_extent(dialog.dem_layer)
             self._load_calculators()
             calculation_date = self._as_datetime(dialog.calculation_date)
+            progress = self._create_progress_dialog(
+                self.tr("Calculating daily insolation…")
+            )
             progress.show()
             QApplication.processEvents()
             surface_source = self._raster_source(dialog.dem_layer)
@@ -138,21 +139,24 @@ class ModuleInsolationPlugin:
                 cancel_callback=self._cancel_callback(progress),
             )
             self._add_result_layer(result.raster_path, self.tr("Daily shadows"))
+            progress.close()
             self._show_success(result.raster_path)
         except Exception as error:
             self._handle_calculation_error(error, progress)
         finally:
-            progress.close()
+            if progress is not None:
+                progress.close()
             self._remove_intermediate(surface_path)
 
     def _run_annual_from_dialog(self, dialog: ModuleInsolationYearDialog) -> None:
-        progress = self._create_progress_dialog(
-            self.tr("Calculating annual insolation…")
-        )
+        progress = None
         surface_path = None
         try:
             self._validate_spatial_extent(dialog.dem_layer)
             self._load_calculators()
+            progress = self._create_progress_dialog(
+                self.tr("Calculating annual insolation…")
+            )
             progress.show()
             QApplication.processEvents()
             surface_source = self._raster_source(dialog.dem_layer)
@@ -178,11 +182,13 @@ class ModuleInsolationPlugin:
                 result.raster_path,
                 self.tr("Annual shadows {year}").format(year=result.year),
             )
+            progress.close()
             self._show_success(result.raster_path)
         except Exception as error:
             self._handle_calculation_error(error, progress)
         finally:
-            progress.close()
+            if progress is not None:
+                progress.close()
             self._remove_intermediate(surface_path)
 
     def _load_calculators(self) -> None:
@@ -425,9 +431,12 @@ class ModuleInsolationPlugin:
     def _handle_calculation_error(
         self,
         error: Exception,
-        progress: QProgressDialog,
+        progress: Optional[QProgressDialog],
     ) -> None:
-        if progress.wasCanceled():
+        was_canceled = progress is not None and progress.wasCanceled()
+        if progress is not None:
+            progress.close()
+        if was_canceled:
             LOGGER.info("Calculation canceled by user")
             QMessageBox.information(
                 self.iface.mainWindow(),
