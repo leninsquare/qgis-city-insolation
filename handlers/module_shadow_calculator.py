@@ -456,11 +456,13 @@ class ModuleShadowCalculator:
             src_nodata=self.OUTPUT_NODATA,
             dst_transform=surface.transform,
             dst_crs=surface.crs,
-            dst_nodata=0,
+            # Zero is valid sunlit ground, so keep NoData distinct during warping.
+            dst_nodata=self.OUTPUT_NODATA,
             resampling=Resampling.nearest,
             num_threads=self._warp_threads,
             init_dest_nodata=True,
         )
+        source_shadow[source_shadow == self.OUTPUT_NODATA] = 0
         return source_shadow
 
     @staticmethod
